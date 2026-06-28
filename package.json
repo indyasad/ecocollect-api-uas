@@ -1,0 +1,21 @@
+{
+  "name": "ecocollect-api-uts",
+  "version": "1.0.0",
+  "description": "Web API UTS Bank Sampah Digital dengan token based login menggunakan Node.js native.",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test:endpoints": "bash scripts/test-endpoints.sh"
+  },
+  "keywords": [
+    "web-api",
+    "jwt",
+    "nodejs",
+    "bank-sampah",
+    "uts"
+  ],
+  "author": "",
+  "license": "MIT"
+}

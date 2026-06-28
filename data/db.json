@@ -1,0 +1,22 @@
+{
+  "users": [],
+  "categories": [
+    {
+      "id": 1,
+      "name": "Plastik",
+      "price_per_kg": 3000
+    },
+    {
+      "id": 2,
+      "name": "Kertas",
+      "price_per_kg": 2500
+    },
+    {
+      "id": 3,
+      "name": "Logam",
+      "price_per_kg": 8000
+    }
+  ],
+  "deposits": [],
+  "withdrawals": []
+}

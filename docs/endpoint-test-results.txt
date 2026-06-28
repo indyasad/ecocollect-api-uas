@@ -1,0 +1,351 @@
+
+==============================
+0. Route List API
+==============================
+GET http://localhost:3000/api/routes
+{
+  "success": true,
+  "message": "EcoCollect API aktif",
+  "data": {
+    "app": "EcoCollect API UTS",
+    "version": "1.0.0",
+    "frontend": "/web",
+    "endpoints": [
+      {
+        "method": "POST",
+        "path": "/api/auth/register",
+        "access": "public",
+        "description": "Registrasi user baru"
+      },
+      {
+        "method": "POST",
+        "path": "/api/auth/login",
+        "access": "public",
+        "description": "Login dan mendapatkan token"
+      },
+      {
+        "method": "GET",
+        "path": "/api/profile",
+        "access": "protected",
+        "description": "Melihat profil user login"
+      },
+      {
+        "method": "PUT",
+        "path": "/api/profile",
+        "access": "protected",
+        "description": "Mengubah profil user login"
+      },
+      {
+        "method": "GET",
+        "path": "/api/categories",
+        "access": "protected",
+        "description": "Melihat daftar kategori sampah"
+      },
+      {
+        "method": "POST",
+        "path": "/api/categories",
+        "access": "protected",
+        "description": "Menambah kategori sampah"
+      },
+      {
+        "method": "GET",
+        "path": "/api/deposits",
+        "access": "protected",
+        "description": "Melihat riwayat setoran sampah"
+      },
+      {
+        "method": "POST",
+        "path": "/api/deposits",
+        "access": "protected",
+        "description": "Membuat transaksi setoran sampah"
+      },
+      {
+        "method": "GET",
+        "path": "/api/withdrawals",
+        "access": "protected",
+        "description": "Melihat riwayat penarikan saldo"
+      },
+      {
+        "method": "POST",
+        "path": "/api/withdrawals",
+        "access": "protected",
+        "description": "Membuat transaksi penarikan saldo"
+      },
+      {
+        "method": "GET",
+        "path": "/api/balance",
+        "access": "protected",
+        "description": "Melihat saldo user"
+      },
+      {
+        "method": "GET",
+        "path": "/api/dashboard",
+        "access": "protected",
+        "description": "Melihat ringkasan dashboard"
+      }
+    ]
+  }
+}
+
+==============================
+1. Registrasi
+==============================
+POST http://localhost:3000/api/auth/register
+{
+  "success": true,
+  "message": "Registrasi berhasil",
+  "data": {
+    "id": 1,
+    "name": "Budi Santoso",
+    "email": "budi1782579826@mail.com",
+    "phone": "081234567890",
+    "address": "Sangatta Selatan",
+    "balance": 0,
+    "role": "nasabah",
+    "created_at": "2026-06-27T17:03:46.520Z",
+    "updated_at": "2026-06-27T17:03:46.520Z"
+  }
+}
+
+==============================
+2. Login
+==============================
+{
+  "success": true,
+  "message": "Login berhasil",
+  "data": {
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJidWRpMTc4MjU3OTgyNkBtYWlsLmNvbSIsInJvbGUiOiJuYXNhYmFoIiwiaWF0IjoxNzgyNTc5ODI2LCJleHAiOjE3ODI2NjYyMjZ9.PIrXVtFbziXNEyW8bD4-PtvX5KvAHv3_Jw8e1cfG8Cc",
+    "user": {
+      "id": 1,
+      "name": "Budi Santoso",
+      "email": "budi1782579826@mail.com",
+      "phone": "081234567890",
+      "address": "Sangatta Selatan",
+      "balance": 0,
+      "role": "nasabah",
+      "created_at": "2026-06-27T17:03:46.520Z",
+      "updated_at": "2026-06-27T17:03:46.520Z"
+    }
+  }
+}
+TOKEN berhasil diambil
+
+==============================
+3. Get Profile
+==============================
+GET http://localhost:3000/api/profile
+{
+  "success": true,
+  "message": "Data profil berhasil diambil",
+  "data": {
+    "id": 1,
+    "name": "Budi Santoso",
+    "email": "budi1782579826@mail.com",
+    "phone": "081234567890",
+    "address": "Sangatta Selatan",
+    "balance": 0,
+    "role": "nasabah",
+    "created_at": "2026-06-27T17:03:46.520Z",
+    "updated_at": "2026-06-27T17:03:46.520Z"
+  }
+}
+
+==============================
+4. Update Profile
+==============================
+PUT http://localhost:3000/api/profile
+{
+  "success": true,
+  "message": "Profil berhasil diperbarui",
+  "data": {
+    "id": 1,
+    "name": "Budi Eco",
+    "email": "budi1782579826@mail.com",
+    "phone": "081298765432",
+    "address": "Jl. Merdeka No. 10",
+    "balance": 0,
+    "role": "nasabah",
+    "created_at": "2026-06-27T17:03:46.520Z",
+    "updated_at": "2026-06-27T17:03:46.880Z"
+  }
+}
+
+==============================
+5. Get Categories
+==============================
+GET http://localhost:3000/api/categories
+{
+  "success": true,
+  "message": "Data kategori sampah berhasil diambil",
+  "data": [
+    {
+      "id": 1,
+      "name": "Plastik",
+      "price_per_kg": 3000
+    },
+    {
+      "id": 2,
+      "name": "Kertas",
+      "price_per_kg": 2500
+    },
+    {
+      "id": 3,
+      "name": "Logam",
+      "price_per_kg": 8000
+    }
+  ]
+}
+
+==============================
+6. Create Category
+==============================
+POST http://localhost:3000/api/categories
+{
+  "success": true,
+  "message": "Kategori berhasil ditambahkan",
+  "data": {
+    "id": 4,
+    "name": "Botol Kaca",
+    "price_per_kg": 1500,
+    "created_at": "2026-06-27T17:03:47.022Z"
+  }
+}
+
+==============================
+7. Create Deposit
+==============================
+POST http://localhost:3000/api/deposits
+{
+  "success": true,
+  "message": "Setoran sampah berhasil dibuat",
+  "data": {
+    "deposit": {
+      "id": 1,
+      "user_id": 1,
+      "category_id": 1,
+      "weight_kg": 5,
+      "price_per_kg": 3000,
+      "total_amount": 15000,
+      "note": "Setoran plastik mingguan",
+      "created_at": "2026-06-27T17:03:47.092Z"
+    },
+    "current_user": {
+      "id": 1,
+      "name": "Budi Eco",
+      "email": "budi1782579826@mail.com",
+      "phone": "081298765432",
+      "address": "Jl. Merdeka No. 10",
+      "balance": 15000,
+      "role": "nasabah",
+      "created_at": "2026-06-27T17:03:46.520Z",
+      "updated_at": "2026-06-27T17:03:47.092Z"
+    }
+  }
+}
+
+==============================
+8. Get Deposits
+==============================
+GET http://localhost:3000/api/deposits
+{
+  "success": true,
+  "message": "Riwayat setoran berhasil diambil",
+  "data": [
+    {
+      "id": 1,
+      "user_id": 1,
+      "category_id": 1,
+      "weight_kg": 5,
+      "price_per_kg": 3000,
+      "total_amount": 15000,
+      "note": "Setoran plastik mingguan",
+      "created_at": "2026-06-27T17:03:47.092Z",
+      "category": {
+        "id": 1,
+        "name": "Plastik",
+        "price_per_kg": 3000
+      }
+    }
+  ]
+}
+
+==============================
+9. Get Balance
+==============================
+GET http://localhost:3000/api/balance
+{
+  "success": true,
+  "message": "Saldo berhasil diambil",
+  "data": {
+    "balance": 15000
+  }
+}
+
+==============================
+10. Create Withdrawal
+==============================
+POST http://localhost:3000/api/withdrawals
+{
+  "success": true,
+  "message": "Penarikan saldo berhasil dibuat",
+  "data": {
+    "withdrawal": {
+      "id": 1,
+      "user_id": 1,
+      "amount": 5000,
+      "method": "tunai",
+      "status": "berhasil",
+      "note": "Ambil saldo sebagian",
+      "created_at": "2026-06-27T17:03:47.340Z"
+    },
+    "current_user": {
+      "id": 1,
+      "name": "Budi Eco",
+      "email": "budi1782579826@mail.com",
+      "phone": "081298765432",
+      "address": "Jl. Merdeka No. 10",
+      "balance": 10000,
+      "role": "nasabah",
+      "created_at": "2026-06-27T17:03:46.520Z",
+      "updated_at": "2026-06-27T17:03:47.340Z"
+    }
+  }
+}
+
+==============================
+11. Get Withdrawals
+==============================
+GET http://localhost:3000/api/withdrawals
+{
+  "success": true,
+  "message": "Riwayat penarikan saldo berhasil diambil",
+  "data": [
+    {
+      "id": 1,
+      "user_id": 1,
+      "amount": 5000,
+      "method": "tunai",
+      "status": "berhasil",
+      "note": "Ambil saldo sebagian",
+      "created_at": "2026-06-27T17:03:47.340Z"
+    }
+  ]
+}
+
+==============================
+12. Dashboard
+==============================
+GET http://localhost:3000/api/dashboard
+{
+  "success": true,
+  "message": "Ringkasan dashboard berhasil diambil",
+  "data": {
+    "user_id": 1,
+    "current_balance": 10000,
+    "total_deposit_amount": 15000,
+    "total_withdrawal_amount": 5000,
+    "total_weight_kg": 5,
+    "total_deposit_transaction": 1,
+    "total_withdrawal_transaction": 1
+  }
+}

@@ -1,0 +1,194 @@
+{
+  "info": {
+    "name": "EcoCollect API UTS",
+    "description": "Collection untuk pengujian endpoint utama Web API UTS Bank Sampah Digital. Jalankan berurutan dari Route List, Register, Login, lalu endpoint protected.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:3000" },
+    { "key": "token", "value": "" },
+    { "key": "email", "value": "" },
+    { "key": "password", "value": "rahasia123" }
+  ],
+  "item": [
+    {
+      "name": "0. Route List API",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/api/routes"
+      }
+    },
+    {
+      "name": "1. Register",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const email = `budi${Date.now()}@mail.com`;",
+              "pm.collectionVariables.set('email', email);",
+              "pm.collectionVariables.set('password', 'rahasia123');"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Budi Santoso\",\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\",\n  \"phone\": \"081234567890\",\n  \"address\": \"Sangatta Selatan\"\n}"
+        },
+        "url": "{{base_url}}/api/auth/register"
+      }
+    },
+    {
+      "name": "2. Login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const json = pm.response.json();",
+              "pm.test('Login berhasil dan token ada', function () {",
+              "  pm.expect(json.success).to.eql(true);",
+              "  pm.expect(json.data.token).to.be.a('string');",
+              "});",
+              "if (json.data && json.data.token) {",
+              "  pm.collectionVariables.set('token', json.data.token);",
+              "}"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\"\n}"
+        },
+        "url": "{{base_url}}/api/auth/login"
+      }
+    },
+    {
+      "name": "3. Get Profile",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{base_url}}/api/profile"
+      }
+    },
+    {
+      "name": "4. Update Profile",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Budi Eco\",\n  \"phone\": \"081298765432\",\n  \"address\": \"Jl. Merdeka No. 10\"\n}"
+        },
+        "url": "{{base_url}}/api/profile"
+      }
+    },
+    {
+      "name": "5. Get Categories",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{base_url}}/api/categories"
+      }
+    },
+    {
+      "name": "6. Create Category",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Botol Kaca\",\n  \"price_per_kg\": 1500\n}"
+        },
+        "url": "{{base_url}}/api/categories"
+      }
+    },
+    {
+      "name": "7. Create Deposit",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"category_id\": 1,\n  \"weight_kg\": 5,\n  \"note\": \"Setoran plastik mingguan\"\n}"
+        },
+        "url": "{{base_url}}/api/deposits"
+      }
+    },
+    {
+      "name": "8. Get Deposits",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{base_url}}/api/deposits"
+      }
+    },
+    {
+      "name": "9. Get Balance",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{base_url}}/api/balance"
+      }
+    },
+    {
+      "name": "10. Create Withdrawal",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"amount\": 5000,\n  \"method\": \"tunai\",\n  \"note\": \"Ambil saldo sebagian\"\n}"
+        },
+        "url": "{{base_url}}/api/withdrawals"
+      }
+    },
+    {
+      "name": "11. Get Withdrawals",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{base_url}}/api/withdrawals"
+      }
+    },
+    {
+      "name": "12. Dashboard",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{base_url}}/api/dashboard"
+      }
+    },
+    {
+      "name": "13. Frontend Web",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/web"
+      }
+    }
+  ]
+}

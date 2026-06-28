@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EcoCollect - Frontend Web API</title>
+    <style>
+         :root {
+            --primary: #16a34a;
+            --primary-dark: #15803d;
+            --soft: #ecfdf5;
+            --text: #0f172a;
+            --muted: #64748b;
+            --danger: #dc2626;
+            --border: #e2e8f0;
+            --card: #ffffff;
+            --bg: #f8fafc;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #ecfdf5 100%);
+            color: var(--text);
+        }
+        
+        header {
+            padding: 34px 22px 22px;
+            text-align: center;
+            background: #ffffffcc;
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(8px);
+            position: sticky;
+            top: 0;
+            z-index: 2;
+        }
+        
+        .logo {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 12px;
+            border-radius: 22px;
+            background: var(--soft);
+            display: grid;
+            place-items: center;
+            border: 1px solid #bbf7d0;
+            overflow: hidden;
+            padding: 4px;
+        }
+        
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+        
+        p {
+            line-height: 1.55;
+        }
+        
+        .subtitle {
+            color: var(--muted);
+            margin: 8px auto 0;
+            max-width: 780px;
+        }
+        
+        main {
+            width: min(1180px, calc(100% - 32px));
+            margin: 26px auto 46px;
+            display: grid;
+            gap: 18px;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 18px;
+        }
+        
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 20px;
+            box-shadow: 0 12px 40px rgba(15, 23, 42, 0.06);
+        }
+        
+        .span-4 {
+            grid-column: span 4;
+        }
+        
+        .span-6 {
+            grid-column: span 6;
+        }
+        
+        .span-8 {
+            grid-column: span 8;
+        }
+        
+        .span-12 {
+            grid-column: span 12;
+        }
+        
+        h2 {
+            margin: 0 0 12px;
+            font-size: 20px;
+        }
+        
+        h3 {
+            margin: 0 0 8px;
+            font-size: 16px;
+        }
+        
+        label {
+            display: block;
+            font-weight: 700;
+            font-size: 13px;
+            margin: 12px 0 6px;
+        }
+        
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 11px 12px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-size: 14px;
+            outline: none;
+            background: #fff;
+        }
+        
+        textarea {
+            min-height: 86px;
+            resize: vertical;
+        }
+        
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px #bbf7d033;
+        }
+        
+        button {
+            border: 0;
+            border-radius: 12px;
+            padding: 11px 14px;
+            background: var(--primary);
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 12px;
+        }
+        
+        button:hover {
+            background: var(--primary-dark);
+        }
+        
+        button.secondary {
+            background: #0f172a;
+        }
+        
+        button.ghost {
+            background: #f1f5f9;
+            color: #0f172a;
+            border: 1px solid var(--border);
+        }
+        
+        .row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .muted {
+            color: var(--muted);
+            font-size: 13px;
+        }
+        
+        .success {
+            color: var(--primary-dark);
+            font-weight: 700;
+        }
+        
+        .danger {
+            color: var(--danger);
+            font-weight: 700;
+        }
+        
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+        
+        .stat {
+            padding: 16px;
+            border-radius: 16px;
+            background: var(--soft);
+            border: 1px solid #bbf7d0;
+        }
+        
+        .stat .label {
+            color: var(--muted);
+            font-size: 12px;
+            margin-bottom: 6px;
+        }
+        
+        .stat .value {
+            font-size: 21px;
+            font-weight: 800;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            overflow: hidden;
+            border-radius: 12px;
+            font-size: 14px;
+        }
+        
+        th,
+        td {
+            border-bottom: 1px solid var(--border);
+            padding: 10px;
+            text-align: left;
+            vertical-align: top;
+        }
+        
+        th {
+            background: #f8fafc;
+        }
+        
+        pre {
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 14px;
+            border-radius: 14px;
+            max-height: 360px;
+            overflow: auto;
+            font-size: 12px;
+            white-space: pre-wrap;
+        }
+        
+        .hide {
+            display: none;
+        }
+        
+        @media (max-width: 920px) {
+            .span-4,
+            .span-6,
+            .span-8 {
+                grid-column: span 12;
+            }
+            .stat-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 560px) {
+            .stat-grid {
+                grid-template-columns: 1fr;
+            }
+            header {
+                position: static;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <img src="public/images/logo.png" alt="Logo EcoCollect" width="120" />
+        </div>
+        <h1>EcoCollect</h1>
+        <p class="subtitle">Frontend Web JavaScript untuk menampilkan dan menguji backend endpoint/API aplikasi mobile Bank Sampah Digital.</p>
+        <p class="muted">Route list API: <strong>GET /</strong> atau <strong>GET /api/routes</strong> - Frontend ini: <strong>GET /web</strong></p>
+    </header>
+
+    <main>
+        <section class="grid">
+            <div class="card span-6">
+                <h2>1. Registrasi</h2>
+                <label>Nama</label>
+                <input id="registerName" value="Budi Santoso" />
+                <label>Email</label>
+                <input id="registerEmail" value="budi@mail.com" />
+                <label>Password</label>
+                <input id="registerPassword" value="rahasia123" type="password" />
+                <label>No. HP</label>
+                <input id="registerPhone" value="081234567890" />
+                <label>Alamat</label>
+                <input id="registerAddress" value="Sangatta Selatan" />
+                <button onclick="registerUser()">Daftar</button>
+            </div>
+
+            <div class="card span-6">
+                <h2>2. Login Token</h2>
+                <label>Email</label>
+                <input id="loginEmail" value="budi@mail.com" />
+                <label>Password</label>
+                <input id="loginPassword" value="rahasia123" type="password" />
+                <button onclick="loginUser()">Login</button>
+                <button class="ghost" onclick="logoutUser()">Logout</button>
+                <p id="loginStatus" class="muted">Belum login.</p>
+            </div>
+        </section>
+
+        <section class="card">
+            <div class="row" style="justify-content: space-between;">
+                <div>
+                    <h2>Dashboard Nasabah</h2>
+                    <p class="muted">Data diambil dari endpoint protected menggunakan Authorization Bearer Token.</p>
+                </div>
+                <button class="secondary" onclick="loadDashboard()">Refresh Dashboard</button>
+            </div>
+            <div class="stat-grid">
+                <div class="stat">
+                    <div class="label">Saldo Saat Ini</div>
+                    <div class="value" id="statBalance">Rp0</div>
+                </div>
+                <div class="stat">
+                    <div class="label">Total Setoran</div>
+                    <div class="value" id="statDeposit">Rp0</div>
+                </div>
+                <div class="stat">
+                    <div class="label">Total Penarikan</div>
+                    <div class="value" id="statWithdrawal">Rp0</div>
+                </div>
+                <div class="stat">
+                    <div class="label">Berat Sampah</div>
+                    <div class="value" id="statWeight">0 kg</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid">
+            <div class="card span-4">
+                <h2>3. Tambah Kategori</h2>
+                <label>Nama Kategori</label>
+                <input id="categoryName" value="Botol Kaca" />
+                <label>Harga per Kg</label>
+                <input id="categoryPrice" value="1500" type="number" />
+                <button onclick="createCategory()">Simpan Kategori</button>
+            </div>
+
+            <div class="card span-4">
+                <h2>4. Buat Setoran</h2>
+                <label>Kategori Sampah</label>
+                <select id="depositCategory"></select>
+                <label>Berat Kg</label>
+                <input id="depositWeight" value="5" type="number" step="0.1" />
+                <label>Catatan</label>
+                <input id="depositNote" value="Setoran plastik mingguan" />
+                <button onclick="createDeposit()">Simpan Setoran</button>
+            </div>
+
+            <div class="card span-4">
+                <h2>5. Penarikan Saldo</h2>
+                <label>Nominal</label>
+                <input id="withdrawalAmount" value="5000" type="number" />
+                <label>Metode</label>
+                <select id="withdrawalMethod">
+          <option value="tunai">Tunai</option>
+          <option value="transfer">Transfer</option>
+        </select>
+                <label>Catatan</label>
+                <input id="withdrawalNote" value="Ambil saldo sebagian" />
+                <button onclick="createWithdrawal()">Tarik Saldo</button>
+            </div>
+        </section>
+
+        <section class="grid">
+            <div class="card span-6">
+                <div class="row" style="justify-content: space-between;">
+                    <h2>Kategori Sampah</h2>
+                    <button class="ghost" onclick="loadCategories()">Refresh</button>
+                </div>
+                <div id="categoriesTable"></div>
+            </div>
+
+            <div class="card span-6">
+                <div class="row" style="justify-content: space-between;">
+                    <h2>Profil User</h2>
+                    <button class="ghost" onclick="loadProfile()">Ambil Profil</button>
+                </div>
+                <div id="profileBox" class="muted">Login lalu klik Ambil Profil.</div>
+            </div>
+        </section>
+
+        <section class="grid">
+            <div class="card span-6">
+                <div class="row" style="justify-content: space-between;">
+                    <h2>Riwayat Setoran</h2>
+                    <button class="ghost" onclick="loadDeposits()">Refresh</button>
+                </div>
+                <div id="depositsTable"></div>
+            </div>
+
+            <div class="card span-6">
+                <div class="row" style="justify-content: space-between;">
+                    <h2>Riwayat Penarikan</h2>
+                    <button class="ghost" onclick="loadWithdrawals()">Refresh</button>
+                </div>
+                <div id="withdrawalsTable"></div>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>Response API Terakhir</h2>
+            <pre id="responseBox">Belum ada request.</pre>
+        </section>
+    </main>
+
+    <script src="/public/app.js"></script>
+</body>
+
+</html>
