@@ -147,15 +147,3 @@ git remote add origin https://github.com/USERNAME/ecocollect-api-uts.git
 git push -u origin main
 ```
 
-Pastikan repository GitHub dibuat dengan status **Public**.
-
-## Catatan Pengumpulan
-
-Yang dikumpulkan ke myswu dalam PDF:
-
-- Judul project
-- Link GitHub public
-- Link video penjelasan minimal 5 menit
-- Link/penjelasan frontend web
-- Bukti route list/API dan Postman collection
-- Ringkasan fitur dan endpoint
